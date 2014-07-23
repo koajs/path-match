@@ -1,7 +1,7 @@
 {
   "name": "path-match",
   "description": "koa route middleware",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "author": {
     "name": "Jonathan Ong",
     "email": "me@jongleberry.com",
@@ -30,5 +30,7 @@
     "koa",
     "route"
   ],
-  "files": ["index.js"]
+  "files": [
+    "index.js"
+  ]
 }
