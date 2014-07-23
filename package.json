@@ -1,0 +1,34 @@
+{
+  "name": "path-match",
+  "description": "koa route middleware",
+  "version": "0.0.0",
+  "author": {
+    "name": "Jonathan Ong",
+    "email": "me@jongleberry.com",
+    "url": "http://jongleberry.com",
+    "twitter": "https://twitter.com/jongleberry"
+  },
+  "license": "MIT",
+  "repository": "koajs/path-match",
+  "dependencies": {
+    "flatten": "0",
+    "path-match": "1",
+    "composition": "1"
+  },
+  "devDependencies": {
+    "koa": "*",
+    "supertest": "0",
+    "mocha": "1",
+    "istanbul-harmony": "0"
+  },
+  "scripts": {
+    "test": "mocha --harmony-generators --reporter spec",
+    "test-cov": "node --harmony-generators node_modules/.bin/istanbul cover node_modules/mocha/bin/_mocha -- --reporter dot",
+    "test-travis": "node --harmony-generators node_modules/.bin/istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --reporter dot"
+  },
+  "keywords": [
+    "koa",
+    "route"
+  ],
+  "files": ["index.js"]
+}
