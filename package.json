@@ -1,5 +1,5 @@
 {
-  "name": "path-match",
+  "name": "koa-path-match",
   "description": "koa route middleware",
   "version": "1.0.0",
   "author": {
