@@ -4,7 +4,9 @@
 [![NPM version][npm-image]][npm-url]
 [![build status][travis-image]][travis-url]
 [![Test coverage][coveralls-image]][coveralls-url]
-[![Gittip][gittip-image]][gittip-url]
+[![Dependency Status][david-image]][david-url]
+[![License][license-image]][license-url]
+[![Downloads][downloads-image]][downloads-url]
 
 A simple routing wrapper around [path-match](https://github.com/expressjs/path-match).
 Similar to [koa-route](https://github.com/koajs/route) except it doesn't check methods.
@@ -42,5 +44,9 @@ overwriting any already existing keys defined.
 [travis-url]: https://travis-ci.org/koajs/path-match
 [coveralls-image]: https://img.shields.io/coveralls/koajs/path-match.svg?style=flat
 [coveralls-url]: https://coveralls.io/r/koajs/path-match?branch=master
-[gittip-image]: https://img.shields.io/gittip/jonathanong.svg?style=flat
-[gittip-url]: https://www.gittip.com/jonathanong/
+[david-image]: http://img.shields.io/david/koajs/path-match.svg?style=flat-square
+[david-url]: https://david-dm.org/koajs/path-match
+[license-image]: http://img.shields.io/npm/l/koa-path-match.svg?style=flat-square
+[license-url]: LICENSE
+[downloads-image]: http://img.shields.io/npm/dm/koa-path-match.svg?style=flat-square
+[downloads-url]: https://npmjs.org/package/koa-path-match

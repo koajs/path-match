@@ -1,7 +1,15 @@
 
 .DS_Store*
 *.log
+*.map
 *.gz
 
+# modules
 node_modules
+
+# coverage
+.nyc_output
 coverage
+
+# cache
+.eslintcache

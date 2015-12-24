@@ -1,0 +1,14 @@
+{
+  "parser": "babel-eslint",
+  "extends": [
+    "standard"
+  ],
+  "env": {
+    "node": true
+  },
+  "rules": {
+    "curly": 0,
+    "generator-star-spacing": 0,
+    "space-before-function-paren": 0
+  }
+}

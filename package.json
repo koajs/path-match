@@ -11,24 +11,36 @@
   "license": "MIT",
   "repository": "koajs/path-match",
   "dependencies": {
-    "flatten": "0",
-    "path-match": "1",
-    "composition": "1"
+    "composition": "^1.0.0",
+    "flatten": "0.0.1",
+    "path-match": "^1.2.3"
   },
   "devDependencies": {
-    "koa": "*",
-    "supertest": "0",
-    "mocha": "1",
-    "istanbul-harmony": "0"
+    "babel-eslint": "4",
+    "codecov": "1",
+    "eslint": "1",
+    "eslint-config-standard": "4",
+    "eslint-plugin-standard": "1",
+    "ghooks": "1",
+    "koa": "^1.1.2",
+    "mocha": "2",
+    "nyc": "5",
+    "supertest": "0"
   },
   "scripts": {
-    "test": "mocha --harmony-generators --reporter spec",
-    "test-cov": "node --harmony-generators node_modules/.bin/istanbul cover node_modules/mocha/bin/_mocha -- --reporter dot",
-    "test-travis": "node --harmony-generators node_modules/.bin/istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --reporter dot"
+    "lint": "eslint --cache index.js test",
+    "test": "mocha",
+    "test-cov": "nyc node_modules/mocha/bin/_mocha && nyc report --reporter=lcov"
+  },
+  "config": {
+    "ghooks": {
+      "pre-push": "npm run lint"
+    }
   },
   "keywords": [
     "koa",
-    "route"
+    "route",
+    "router"
   ],
   "files": [
     "index.js"
