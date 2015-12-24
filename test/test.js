@@ -6,7 +6,7 @@ const koa = require('koa')
 
 const match = require('..')()
 
-describe('match(path)', function () {
+describe('match(path, fn)', function () {
   describe('matches', function () {
     it('should execute the fn', function (done) {
       const app = koa()
