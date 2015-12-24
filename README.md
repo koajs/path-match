@@ -3,7 +3,7 @@
 
 [![NPM version][npm-image]][npm-url]
 [![build status][travis-image]][travis-url]
-[![Test coverage][coveralls-image]][coveralls-url]
+[![Test coverage][codecov-image]][codecov-url]
 [![Dependency Status][david-image]][david-url]
 [![License][license-image]][license-url]
 [![Downloads][downloads-image]][downloads-url]
@@ -78,8 +78,8 @@ overwriting any already existing keys defined.
 [npm-url]: https://npmjs.org/package/koa-path-match
 [travis-image]: https://img.shields.io/travis/koajs/path-match.svg?style=flat
 [travis-url]: https://travis-ci.org/koajs/path-match
-[coveralls-image]: https://img.shields.io/coveralls/koajs/path-match.svg?style=flat
-[coveralls-url]: https://coveralls.io/r/koajs/path-match?branch=master
+[codecov-image]: https://img.shields.io/codecov/c/github/koajs/path-match/master.svg?style=flat-square
+[codecov-url]: https://codecov.io/github/koajs/path-match
 [david-image]: http://img.shields.io/david/koajs/path-match.svg?style=flat-square
 [david-url]: https://david-dm.org/koajs/path-match
 [license-image]: http://img.shields.io/npm/l/koa-path-match.svg?style=flat-square
