@@ -14,10 +14,10 @@ All of these routers use [path-to-regexp](https://github.com/component/path-to-r
 underneath, which is what Express uses as well.
 
 ```js
-var route = require('koa-path-match')({/* options passed to path-to-regexp */})
+const route = require('koa-path-match')({/* options passed to path-to-regexp */})
 
 app.use(route('/:id(\\d+)', function* (next) {
-  var id = this.params.id
+  const id = this.params.id
 
   // do stuff
   switch (this.request.method) {
