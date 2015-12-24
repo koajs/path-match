@@ -11,7 +11,7 @@
   "license": "MIT",
   "repository": "koajs/path-match",
   "dependencies": {
-    "composition": "^1.0.0",
+    "composition": "^2.2.1",
     "flatten": "0.0.1",
     "path-match": "^1.2.3"
   },
