@@ -25,7 +25,7 @@
     "koa": "^1.1.2",
     "mocha": "2",
     "nyc": "5",
-    "supertest": "0"
+    "supertest": "^1.1.0"
   },
   "scripts": {
     "lint": "eslint --cache index.js test",
