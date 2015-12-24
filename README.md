@@ -9,7 +9,7 @@
 [![Downloads][downloads-image]][downloads-url]
 
 A simple routing wrapper around [path-match](https://github.com/expressjs/path-match).
-Similar to [koa-route](https://github.com/koajs/route) except it doesn't check methods.
+Similar to [koa-route](https://github.com/koajs/route), except it optionally handles methods better.
 All of these routers use [path-to-regexp](https://github.com/component/path-to-regexp)
 underneath, which is what Express uses as well.
 
@@ -26,12 +26,48 @@ app.use(route('/:id(\\d+)', function* (next) {
 }))
 ```
 
+Or you can create middleware per method:
+
+```js
+app.use(route('/:id(\\d+)')
+  .get(function* () {
+    this.body = yield Things.getById(this.params.id)
+  })
+  .patch(function* () {
+    const body = yield require('co-parse').json(this)
+    this.body = yield Things.update(this.params.id, body)
+  })
+  .delete(function* () {
+    yield Things.delete(this.params.id)
+    this.status = 204
+  })
+)
+```
+
+
 ## API
 
 ### route(path, fns...)
 
 `path`s are just like Express routes. `fns` is either a single middleware
 or nested arrays of middleware, just like Express.
+
+### const router = route(path)
+
+When you don't set `fns` in the `route()` function, a router instance is returned.
+
+### router[method](fns...)
+
+Define a middleware just for a specific method.
+
+```js
+app.use(route('/:id(\\d+)').get(function* () {
+  this.body = yield Things.getById(this.params.id)
+}))
+```
+
+- `next` is not passed as a parameter.
+  I consider this an anti-pattern in Koa - one route/method, one function.
 
 ### this.params
 

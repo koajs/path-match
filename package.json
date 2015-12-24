@@ -8,6 +8,7 @@
   "dependencies": {
     "composition": "^2.2.1",
     "flatten": "0.0.1",
+    "lodash": "^3.10.1",
     "path-match": "^1.2.3"
   },
   "devDependencies": {
@@ -23,7 +24,7 @@
     "supertest": "^1.1.0"
   },
   "scripts": {
-    "lint": "eslint --cache index.js test",
+    "lint": "eslint --cache lib test",
     "test": "mocha",
     "test-cov": "nyc node_modules/mocha/bin/_mocha && nyc report --reporter=lcov"
   },
@@ -38,6 +39,7 @@
     "router"
   ],
   "files": [
-    "index.js"
-  ]
+    "lib"
+  ],
+  "main": "lib"
 }
