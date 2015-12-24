@@ -9,6 +9,7 @@
   "rules": {
     "curly": 0,
     "generator-star-spacing": 0,
+    "no-var": 2,
     "space-before-function-paren": 0
   }
 }
