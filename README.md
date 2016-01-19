@@ -56,7 +56,7 @@ or nested arrays of middleware, just like Express.
 
 When you don't set `fns` in the `route()` function, a router instance is returned.
 
-### router[method](fns...)
+### router\[method\]\(fns...\)
 
 Define a middleware just for a specific method.
 
