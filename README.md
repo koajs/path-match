@@ -76,7 +76,7 @@ overwriting any already existing keys defined.
 
 [npm-image]: https://img.shields.io/npm/v/koa-path-match.svg?style=flat
 [npm-url]: https://npmjs.org/package/koa-path-match
-[travis-image]: https://img.shields.io/travis/koajs/path-match.svg?style=flat
+[travis-image]: https://img.shields.io/travis/koajs/path-match/master.svg?style=flat
 [travis-url]: https://travis-ci.org/koajs/path-match
 [codecov-image]: https://img.shields.io/codecov/c/github/koajs/path-match/master.svg?style=flat-square
 [codecov-url]: https://codecov.io/github/koajs/path-match
