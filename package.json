@@ -17,7 +17,7 @@
     "eslint": "1",
     "eslint-config-standard": "4",
     "eslint-plugin-standard": "1",
-    "ghooks": "1",
+    "ghooks": "1.0.2",
     "koa": "^1.1.2",
     "mocha": "2",
     "nyc": "5",
