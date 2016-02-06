@@ -15,7 +15,7 @@
     "babel-eslint": "4",
     "codecov": "1",
     "eslint": "1",
-    "eslint-config-standard": "4",
+    "eslint-config-standard": "5.0.0",
     "eslint-plugin-standard": "1",
     "ghooks": "1",
     "koa": "^1.1.2",
