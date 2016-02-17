@@ -7,20 +7,20 @@
   "repository": "koajs/path-match",
   "dependencies": {
     "composition": "^2.2.1",
-    "flatten": "1.0.2",
+    "flatten": "^1.0.2",
     "lodash": "^4.0.0",
     "path-match": "^1.2.3"
   },
   "devDependencies": {
-    "babel-eslint": "4",
-    "codecov": "1",
-    "eslint": "1",
-    "eslint-config-standard": "4",
-    "eslint-plugin-standard": "1",
-    "ghooks": "1",
+    "babel-eslint": "^4.0.0",
+    "codecov": "^1.0.0",
+    "eslint": "^1.0.0",
+    "eslint-config-standard": "^4.0.0",
+    "eslint-plugin-standard": "^1.0.0",
+    "ghooks": "^1.0.0",
     "koa": "^1.1.2",
-    "mocha": "2",
-    "nyc": "5",
+    "mocha": "^2.0.0",
+    "nyc": "^5.0.0",
     "supertest": "^1.1.0"
   },
   "scripts": {
