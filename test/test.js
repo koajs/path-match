@@ -8,7 +8,7 @@ const match = require('..')()
 
 describe('match(path, fn)', () => {
   describe('when the route matches', () => {
-    it('should execute the fn', done => {
+    it('should execute the fn', (done) => {
       const app = koa()
       app.use(match('/a/b', function* (next) {
         this.status = 204
@@ -19,7 +19,7 @@ describe('match(path, fn)', () => {
       .expect(204, done)
     })
 
-    it('should populate this.params', done => {
+    it('should populate this.params', (done) => {
       const app = koa()
       app.use(match('/:a(a)/:b(b)', function* (next) {
         this.status = 204
@@ -34,7 +34,7 @@ describe('match(path, fn)', () => {
   })
 
   describe('when the route does not match', () => {
-    it('should not execute the fn', done => {
+    it('should not execute the fn', (done) => {
       const app = koa()
       app.use(match('/a/b', function* (next) {
         this.status = 204
@@ -48,10 +48,10 @@ describe('match(path, fn)', () => {
 })
 
 describe('match(path, fns...)', () => {
-  it('should support multiple functions', done => {
+  it('should support multiple functions', (done) => {
     let calls = 0
     function* call(next) {
-      yield* next
+      yield next
       this.body = String(++calls)
     }
 
@@ -64,10 +64,10 @@ describe('match(path, fns...)', () => {
     .expect('3', done)
   })
 
-  it('should support nested functions', done => {
+  it('should support nested functions', (done) => {
     let calls = 0
     function* call(next) {
-      yield* next
+      yield next
       this.body = String(++calls)
     }
 
@@ -80,10 +80,10 @@ describe('match(path, fns...)', () => {
     .expect('3', done)
   })
 
-  it('should support both multiple and nested functions', done => {
+  it('should support both multiple and nested functions', (done) => {
     let calls = 0
     function* call(next) {
-      yield* next
+      yield next
       this.body = String(++calls)
     }
 
@@ -99,7 +99,7 @@ describe('match(path, fns...)', () => {
 
 describe('match(path)[method](fn)', () => {
   describe('when the route matches', () => {
-    it('should execute the fn', done => {
+    it('should execute the fn', (done) => {
       const app = koa()
       app.use(match('/a/b').get(function* (next) {
         this.status = 204
@@ -110,7 +110,7 @@ describe('match(path)[method](fn)', () => {
       .expect(204, done)
     })
 
-    it('should populate this.params', done => {
+    it('should populate this.params', (done) => {
       const app = koa()
       app.use(match('/:a(a)/:b(b)').get(function* (next) {
         this.status = 204
@@ -123,7 +123,7 @@ describe('match(path)[method](fn)', () => {
       .expect(204, done)
     })
 
-    it('should support OPTIONS', done => {
+    it('should support OPTIONS', (done) => {
       const app = koa()
       app.use(match('/:a(a)/:b(b)').get(function* (next) {
         this.status = 204
@@ -139,7 +139,7 @@ describe('match(path)[method](fn)', () => {
       .expect(204, done)
     })
 
-    it('should support HEAD as GET', done => {
+    it('should support HEAD as GET', (done) => {
       const app = koa()
       let called = false
       app.use(match('/:a(a)/:b(b)').get(function* (next) {
@@ -161,7 +161,7 @@ describe('match(path)[method](fn)', () => {
   })
 
   describe('when the route does not match', () => {
-    it('should not execute the fn', done => {
+    it('should not execute the fn', (done) => {
       const app = koa()
       app.use(match('/a/b').get(function* (next) {
         this.status = 204
@@ -174,7 +174,7 @@ describe('match(path)[method](fn)', () => {
   })
 
   describe('when the method does not match', () => {
-    it('should 405', done => {
+    it('should 405', (done) => {
       const app = koa()
       app.use(match('/a/b').get(function* (next) {
         this.status = 204
