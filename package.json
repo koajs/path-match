@@ -7,8 +7,7 @@
   "repository": "koajs/path-match",
   "dependencies": {
     "composition": "^2.2.1",
-    "flatten": "^1.0.2",
-    "lodash": "^4.0.0",
+    "lodash": "^4.4.0",
     "path-match": "^1.2.3"
   },
   "devDependencies": {
