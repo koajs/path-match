@@ -6,7 +6,6 @@
   "license": "MIT",
   "repository": "koajs/path-match",
   "dependencies": {
-    "composition": "^2.2.1",
     "lodash": "^4.4.0",
     "path-match": "^1.2.3"
   },
