@@ -18,7 +18,7 @@
     "eslint-plugin-promise": "^1.0.8",
     "eslint-plugin-standard": "^1.0.0",
     "ghooks": "^1.0.0",
-    "koa": "^1.1.2",
+    "koa": "^2.0.0-alpha.3",
     "mocha": "^2.0.0",
     "nyc": "^5.0.0",
     "supertest": "^1.1.0"
