@@ -16,11 +16,11 @@ underneath, which is what Express uses as well.
 ```js
 const route = require('koa-path-match')({/* options passed to path-to-regexp */})
 
-app.use(route('/:id(\\d+)', function* (next) {
-  const id = this.params.id
+app.use(route('/:id(\\d+)', (ctx, next) => {
+  const id = ctx.params.id
 
   // do stuff
-  switch (this.request.method) {
+  switch (ctx.request.method) {
 
   }
 }))
@@ -30,16 +30,12 @@ Or you can create middleware per method:
 
 ```js
 app.use(route('/:id(\\d+)')
-  .get(function* () {
-    this.body = yield Things.getById(this.params.id)
+  .get(async ctx => {
+    ctx.body = await Things.getById(ctx.params.id)
   })
-  .patch(function* () {
-    const body = yield require('co-parse').json(this)
-    this.body = yield Things.update(this.params.id, body)
-  })
-  .delete(function* () {
-    yield Things.delete(this.params.id)
-    this.status = 204
+  .delete(async ctx => {
+    await Things.delete(ctx.params.id)
+    ctx.status = 204
   })
 )
 ```
@@ -61,8 +57,8 @@ When you don't set `fns` in the `route()` function, a router instance is returne
 Define a middleware just for a specific method.
 
 ```js
-app.use(route('/:id(\\d+)').get(function* () {
-  this.body = yield Things.getById(this.params.id)
+app.use(route('/:id(\\d+)').get(await ctx => {
+  ctx.body = yield Things.getById(ctx.params.id)
 }))
 ```
 
@@ -71,7 +67,7 @@ app.use(route('/:id(\\d+)').get(function* () {
 
 ### this.params
 
-Any keys defined in the path will be set to `this.params`,
+Any keys defined in the path will be set to `ctx.params`,
 overwriting any already existing keys defined.
 
 [npm-image]: https://img.shields.io/npm/v/koa-path-match.svg?style=flat
