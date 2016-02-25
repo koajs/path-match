@@ -13,6 +13,8 @@ Similar to [koa-route](https://github.com/koajs/route), except it optionally han
 All of these routers use [path-to-regexp](https://github.com/component/path-to-regexp)
 underneath, which is what Express uses as well.
 
+Install `v1.x` for Koa v1. Install `v2.x` or `next` for Koa v2.
+
 ```js
 const route = require('koa-path-match')({/* options passed to path-to-regexp */})
 
