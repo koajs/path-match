@@ -57,8 +57,8 @@ When you don't set `fns` in the `route()` function, a router instance is returne
 Define a middleware just for a specific method.
 
 ```js
-app.use(route('/:id(\\d+)').get(await ctx => {
-  ctx.body = yield Things.getById(ctx.params.id)
+app.use(route('/:id(\\d+)').get(async ctx => {
+  ctx.body = await Things.getById(ctx.params.id)
 }))
 ```
 
