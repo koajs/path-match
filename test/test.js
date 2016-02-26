@@ -3,6 +3,7 @@
 const request = require('supertest')
 const assert = require('assert')
 const Koa = require('koa')
+const parallel = require('node-parallel')
 
 const match = require('..')()
 
@@ -189,6 +190,50 @@ describe('match(path)[method](fn)', () => {
       .expect('Allow', /\bGET\b/)
       .expect('Allow', /\bOPTIONS\b/)
       .expect(405, done)
+    })
+  })
+})
+
+describe('match(path)[method](fn).[method](fn)...', () => {
+  describe('when the route matches', () => {
+    it('should execute the fn', (done) => {
+      const app = new Koa()
+      app.use(match('/a/b').get(function (ctx) {
+        ctx.status = 204
+      }).post(function (ctx) {
+        ctx.status = 201
+      }))
+
+      parallel()
+      .add(function (cb) {
+        request(app.listen())
+        .get('/a/b')
+        .expect(204, cb)
+      })
+      .add(function (cb) {
+        request(app.listen())
+        .post('/a/b')
+        .expect(201, cb)
+      }).done(done)
+    })
+
+    it('should support OPTIONS', (done) => {
+      const app = new Koa()
+      app.use(match('/:a(a)/:b(b)').get(function (ctx, next) {
+        ctx.status = 204
+        assert.equal('a', ctx.params.a)
+        assert.equal('b', ctx.params.b)
+      }).post(function (ctx, next) {
+        ctx.status = 201
+      }))
+
+      request(app.listen())
+      .options('/a/b')
+      .expect('Allow', /\bHEAD\b/)
+      .expect('Allow', /\bGET\b/)
+      .expect('Allow', /\bPOST\b/)
+      .expect('Allow', /\bOPTIONS\b/)
+      .expect(204, done)
     })
   })
 })
