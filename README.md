@@ -18,7 +18,7 @@ Install `v1.x` for Koa v1. Install `v2.x` or `next` for Koa v2.
 ```js
 const route = require('koa-path-match')({/* options passed to path-to-regexp */})
 
-app.use(route('/:id(\\d+)', function* (next) {
+app.use(route('/:id(\\d+)', function * (next) {
   const id = this.params.id
 
   // do stuff
@@ -32,14 +32,14 @@ Or you can create middleware per method:
 
 ```js
 app.use(route('/:id(\\d+)')
-  .get(function* () {
+  .get(function * () {
     this.body = yield Things.getById(this.params.id)
   })
-  .patch(function* () {
+  .patch(function * () {
     const body = yield require('co-parse').json(this)
     this.body = yield Things.update(this.params.id, body)
   })
-  .delete(function* () {
+  .delete(function * () {
     yield Things.delete(this.params.id)
     this.status = 204
   })
@@ -63,7 +63,7 @@ When you don't set `fns` in the `route()` function, a router instance is returne
 Define a middleware just for a specific method.
 
 ```js
-app.use(route('/:id(\\d+)').get(function* () {
+app.use(route('/:id(\\d+)').get(function * () {
   this.body = yield Things.getById(this.params.id)
 }))
 ```

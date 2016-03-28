@@ -11,27 +11,17 @@
     "path-match": "^1.2.3"
   },
   "devDependencies": {
-    "babel-eslint": "^5.0.0",
     "codecov": "^1.0.0",
-    "eslint": "^2.1.0",
-    "eslint-config-standard": "^5.1.0",
-    "eslint-plugin-promise": "^1.0.8",
-    "eslint-plugin-standard": "^1.0.0",
-    "ghooks": "^1.0.0",
     "koa": "^1.1.2",
     "mocha": "^2.0.0",
     "nyc": "^6.0.0",
+    "standard": "^6.0.8",
     "supertest": "^1.1.0"
   },
   "scripts": {
-    "lint": "eslint --cache lib test",
+    "lint": "standard lib/**/*.js test/**/*.js",
     "test": "mocha",
     "test-cov": "nyc node_modules/mocha/bin/_mocha && nyc report --reporter=lcov"
-  },
-  "config": {
-    "ghooks": {
-      "pre-push": "npm run lint"
-    }
   },
   "keywords": [
     "koa",
