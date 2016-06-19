@@ -10,9 +10,9 @@
     "path-match": "^1.2.3"
   },
   "devDependencies": {
-    "babel-eslint": "^5.0.0",
+    "babel-eslint": "^6.0.4",
     "codecov": "^1.0.0",
-    "eslint": "^2.1.0",
+    "eslint": "^2.13.0",
     "eslint-config-standard": "^5.1.0",
     "eslint-plugin-promise": "^1.0.8",
     "eslint-plugin-standard": "^1.0.0",
@@ -20,7 +20,7 @@
     "koa": "^2.0.0-alpha.3",
     "mocha": "^2.0.0",
     "node-parallel": "^0.1.6",
-    "nyc": "^5.0.0",
+    "nyc": "^6.6.1",
     "supertest": "^1.1.0"
   },
   "scripts": {
