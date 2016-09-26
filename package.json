@@ -15,7 +15,7 @@
     "koa": "^1.1.2",
     "mocha": "^3.0.2",
     "nyc": "^6.0.0",
-    "standard": "^7.0.0",
+    "standard": "^8.2.0",
     "supertest": "^2.0.0"
   },
   "scripts": {
