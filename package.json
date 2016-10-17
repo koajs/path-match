@@ -14,8 +14,8 @@
     "codecov": "^1.0.0",
     "koa": "^1.1.2",
     "mocha": "^3.0.2",
-    "nyc": "^6.0.0",
-    "standard": "^7.0.0",
+    "nyc": "^8.3.1",
+    "standard": "^8.4.0",
     "supertest": "^2.0.0"
   },
   "scripts": {
@@ -31,5 +31,10 @@
   "files": [
     "lib"
   ],
-  "main": "lib"
+  "main": "lib",
+  "nyc": {
+    "exclude": [
+      "node_modules"
+    ]
+  }
 }
