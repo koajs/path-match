@@ -16,11 +16,11 @@
     "eslint-config-standard": "^5.1.0",
     "eslint-plugin-promise": "^1.0.8",
     "eslint-plugin-standard": "^1.0.0",
-    "koa": "^2.0.0-alpha.3",
+    "koa": "^2.0.1",
     "mocha": "^2.0.0",
     "node-parallel": "^0.1.6",
     "nyc": "^6.6.1",
-    "supertest": "^1.1.0"
+    "supertest": "^3.0.0"
   },
   "scripts": {
     "lint": "eslint --cache lib test",
