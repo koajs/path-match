@@ -10,7 +10,7 @@
     "path-match": "^1.2.3"
   },
   "devDependencies": {
-    "babel-eslint": "^7.2.1",
+    "babel-eslint": "^8.0.0",
     "codecov": "^2.1.0",
     "eslint": "^3.17.0",
     "eslint-config-standard": "^7.1.0",
