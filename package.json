@@ -14,7 +14,7 @@
     "codecov": "^3.0.0",
     "eslint": "^3.17.0",
     "eslint-config-standard": "^7.1.0",
-    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-promise": "^4.0.0",
     "eslint-plugin-standard": "^3.0.0",
     "koa": "^2.0.1",
     "mocha": "^3.2.0",
