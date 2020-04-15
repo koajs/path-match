@@ -13,6 +13,7 @@ jobs:
 
     env:
       CI: true
+      CODECOV_TOKEN: 849dde91-e5e3-438d-a75e-07745ed7948a
 
     steps:
     - uses: actions/checkout@v2
