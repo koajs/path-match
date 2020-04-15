@@ -20,7 +20,7 @@
     "jest": "^25.3.0",
     "koa": "^2.0.1",
     "node-parallel": "^0.1.6",
-    "supertest": "^3.0.0"
+    "supertest": "^4.0.2"
   },
   "scripts": {
     "eslint": "eslint . --ignore-path .gitignore",
