@@ -2,10 +2,8 @@
 # Koa Path Match
 
 [![NPM version][npm-image]][npm-url]
-[![build status][travis-image]][travis-url]
+[![Node.js CI](https://github.com/koajs/path-match/workflows/Node.js%20CI/badge.svg?branch=master)](https://github.com/koajs/path-match/actions?query=workflow%3A%22Node.js+CI%22)
 [![Test coverage][codecov-image]][codecov-url]
-[![Dependency Status][david-image]][david-url]
-[![Greenkeeper badge](https://badges.greenkeeper.io/koajs/path-match.svg)](https://greenkeeper.io/)
 [![License][license-image]][license-url]
 [![Downloads][downloads-image]][downloads-url]
 
@@ -73,12 +71,8 @@ overwriting any already existing keys defined.
 
 [npm-image]: https://img.shields.io/npm/v/koa-path-match.svg?style=flat
 [npm-url]: https://npmjs.org/package/koa-path-match
-[travis-image]: https://img.shields.io/travis/koajs/path-match/master.svg?style=flat
-[travis-url]: https://travis-ci.org/koajs/path-match
 [codecov-image]: https://img.shields.io/codecov/c/github/koajs/path-match/master.svg?style=flat-square
 [codecov-url]: https://codecov.io/github/koajs/path-match
-[david-image]: http://img.shields.io/david/koajs/path-match.svg?style=flat-square
-[david-url]: https://david-dm.org/koajs/path-match
 [license-image]: http://img.shields.io/npm/l/koa-path-match.svg?style=flat-square
 [license-url]: LICENSE
 [downloads-image]: http://img.shields.io/npm/dm/koa-path-match.svg?style=flat-square
