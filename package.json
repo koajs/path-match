@@ -7,10 +7,10 @@
   "repository": "koajs/path-match",
   "dependencies": {
     "lodash": "^4.4.0",
-    "path-match": "^1.2.3"
+    "path-match": "^1.2.4"
   },
   "devDependencies": {
-    "codecov": "^3.0.0",
+    "codecov": "^3.6.5",
     "eslint": "^6.8.0",
     "eslint-config-standard": "^14.1.1",
     "eslint-plugin-import": "^2.20.2",
@@ -18,13 +18,14 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
     "jest": "^25.3.0",
-    "koa": "^2.0.1",
+    "koa": "^2",
     "node-parallel": "^0.1.6",
     "supertest": "^4.0.2"
   },
   "scripts": {
     "eslint": "eslint . --ignore-path .gitignore",
-    "test": "jest --forceExit"
+    "test": "jest --forceExit",
+    "coverage": "npm run test -- --coverage"
   },
   "keywords": [
     "koa",
@@ -34,5 +35,8 @@
   "files": [
     "lib"
   ],
-  "main": "lib"
+  "main": "lib",
+  "engines": {
+    "node": ">=8"
+  }
 }
