@@ -1,15 +1,29 @@
+#       OS        #
+###################
+.DS_Store
+.idea
+Thumbs.db
+tmp/
+temp/
 
-.DS_Store*
-*.log
-*.map
-*.gz
 
-# modules
+#     Node.js     #
+###################
 node_modules
+package-lock.json
+yarn.lock
+npm-debug.log
+yarn-debug.log
+yarn-error.log
 
-# coverage
-.nyc_output
+
+#       NYC       #
+###################
 coverage
+*.lcov
+.nyc_output
 
-# cache
+
+#       Cache      #
+###################
 .eslintcache
