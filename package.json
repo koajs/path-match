@@ -6,7 +6,8 @@
   "license": "MIT",
   "repository": "koajs/path-match",
   "dependencies": {
-    "lodash": "^4.4.0",
+    "lodash.flattendeep": "^4.4.0",
+    "lodash.uniq": "^4.5.0",
     "path-match": "^1.2.4"
   },
   "devDependencies": {
