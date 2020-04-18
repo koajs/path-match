@@ -25,9 +25,7 @@
   },
   "scripts": {
     "eslint": "eslint . --ignore-path .gitignore",
-    "test": "jest --forceExit",
-    "coverage": "npm run test -- --coverage",
-    "ci": "npm run eslint && npm run coverage"
+    "test": "jest --forceExit"
   },
   "keywords": [
     "koa",
