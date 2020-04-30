@@ -7,7 +7,8 @@
   "repository": "koajs/path-match",
   "dependencies": {
     "lodash": "^4.4.0",
-    "path-match": "^1.2.3"
+    "path-match": "^1.2.3",
+    "snyk": "^1.316.1"
   },
   "devDependencies": {
     "codecov": "^3.0.0",
@@ -24,7 +25,9 @@
   },
   "scripts": {
     "eslint": "eslint . --ignore-path .gitignore",
-    "test": "jest --forceExit"
+    "test": "jest --forceExit",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "keywords": [
     "koa",
@@ -34,5 +37,6 @@
   "files": [
     "lib"
   ],
-  "main": "lib"
+  "main": "lib",
+  "snyk": true
 }
