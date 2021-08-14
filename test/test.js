@@ -3,53 +3,46 @@
 const request = require('supertest')
 const assert = require('assert')
 const Koa = require('koa')
-const parallel = require('node-parallel')
 
 const match = require('..')()
 
 describe('match(path, fn)', () => {
   describe('when the route matches', () => {
-    it('should execute the fn', (done) => {
+    it('should execute the fn', async () => {
       const app = new Koa()
-      app.use(match('/a/b', function (ctx) {
+      app.use(match('/a/b', (ctx) => {
         ctx.status = 204
       }))
 
-      request(app.listen())
-        .get('/a/b')
-        .expect(204, done)
+      await request(app.listen()).get('/a/b').expect(204)
     })
 
-    it('should populate this.params', (done) => {
+    it('should populate this.params', async () => {
       const app = new Koa()
-      app.use(match('/:a(a)/:b(b)', function (ctx) {
+      app.use(match('/:a(a)/:b(b)', (ctx) => {
         ctx.status = 204
         assert.equal('a', ctx.params.a)
         assert.equal('b', ctx.params.b)
       }))
 
-      request(app.listen())
-        .get('/a/b')
-        .expect(204, done)
+      await request(app.listen()).get('/a/b').expect(204)
     })
   })
 
   describe('when the route does not match', () => {
-    it('should not execute the fn', (done) => {
+    it('should not execute the fn', async () => {
       const app = new Koa()
-      app.use(match('/a/b', function (ctx) {
+      app.use(match('/a/b', (ctx) => {
         ctx.status = 204
       }))
 
-      request(app.listen())
-        .get('/a')
-        .expect(404, done)
+      await request(app.listen()).get('/a').expect(404)
     })
   })
 })
 
 describe('match(path, fns...)', () => {
-  it('should support multiple functions', (done) => {
+  it('should support multiple functions', async () => {
     let calls = 0
     function call (ctx, next) {
       return next().then(() => {
@@ -60,13 +53,10 @@ describe('match(path, fns...)', () => {
     const app = new Koa()
     app.use(match('/a/b', call, call, call))
 
-    request(app.listen())
-      .get('/a/b')
-      .expect(200)
-      .expect('3', done)
+    await request(app.listen()).get('/a/b').expect(200).expect('3')
   })
 
-  it('should support nested functions', (done) => {
+  it('should support nested functions', async () => {
     let calls = 0
     function call (ctx, next) {
       return next().then(() => {
@@ -77,13 +67,10 @@ describe('match(path, fns...)', () => {
     const app = new Koa()
     app.use(match('/a/b', [call, [call, call]]))
 
-    request(app.listen())
-      .get('/a/b')
-      .expect(200)
-      .expect('3', done)
+    await request(app.listen()).get('/a/b').expect(200).expect('3')
   })
 
-  it('should support both multiple and nested functions', (done) => {
+  it('should support both multiple and nested functions', async () => {
     let calls = 0
     function call (ctx, next) {
       return next().then(() => {
@@ -94,27 +81,22 @@ describe('match(path, fns...)', () => {
     const app = new Koa()
     app.use(match('/a/b', [call, [call, call]], call, [call, call]))
 
-    request(app.listen())
-      .get('/a/b')
-      .expect(200)
-      .expect('6', done)
+    await request(app.listen()).get('/a/b').expect(200).expect('6')
   })
 })
 
 describe('match(path)[method](fn)', () => {
   describe('when the route matches', () => {
-    it('should execute the fn', (done) => {
+    it('should execute the fn', async () => {
       const app = new Koa()
       app.use(match('/a/b').get(function (ctx) {
         ctx.status = 204
       }))
 
-      request(app.listen())
-        .get('/a/b')
-        .expect(204, done)
+      await request(app.listen()).get('/a/b').expect(204)
     })
 
-    it('should populate this.params', (done) => {
+    it('should populate this.params', async () => {
       const app = new Koa()
       app.use(match('/:a(a)/:b(b)').get(function (ctx) {
         ctx.status = 204
@@ -122,12 +104,10 @@ describe('match(path)[method](fn)', () => {
         assert.equal('b', ctx.params.b)
       }))
 
-      request(app.listen())
-        .get('/a/b')
-        .expect(204, done)
+      await request(app.listen()).get('/a/b').expect(204)
     })
 
-    it('should support OPTIONS', (done) => {
+    it('should support OPTIONS', async () => {
       const app = new Koa()
       app.use(match('/:a(a)/:b(b)').get(function (ctx, next) {
         ctx.status = 204
@@ -135,15 +115,15 @@ describe('match(path)[method](fn)', () => {
         assert.equal('b', ctx.params.b)
       }))
 
-      request(app.listen())
+      await request(app.listen())
         .options('/a/b')
         .expect('Allow', /\bHEAD\b/)
         .expect('Allow', /\bGET\b/)
         .expect('Allow', /\bOPTIONS\b/)
-        .expect(204, done)
+        .expect(204)
     })
 
-    it('should support HEAD as GET', (done) => {
+    it('should support HEAD as GET', async () => {
       const app = new Koa()
       let called = false
       app.use(match('/:a(a)/:b(b)').get(function (ctx, next) {
@@ -153,50 +133,45 @@ describe('match(path)[method](fn)', () => {
         assert.equal('b', ctx.params.b)
       }))
 
-      request(app.listen())
-        .head('/a/b')
-        .expect(204, (err, res) => {
-          if (err) return done(err)
+      await request(app.listen()).head('/a/b').expect(204)
 
-          assert(called)
-          done()
-        })
+      assert(called)
     })
   })
 
   describe('when the route does not match', () => {
-    it('should not execute the fn', (done) => {
+    it('should not execute the fn', async () => {
       const app = new Koa()
       app.use(match('/a/b').get(function (ctx) {
         ctx.status = 204
       }))
 
-      request(app.listen())
+      await request(app.listen())
         .get('/a')
-        .expect(404, done)
+        .expect(404)
     })
   })
 
   describe('when the method does not match', () => {
-    it('should 405', (done) => {
+    it('should 405', async () => {
       const app = new Koa()
       app.use(match('/a/b').get(function (ctx) {
         ctx.status = 204
       }))
 
-      request(app.listen())
+      await request(app.listen())
         .post('/a/b')
         .expect('Allow', /\bHEAD\b/)
         .expect('Allow', /\bGET\b/)
         .expect('Allow', /\bOPTIONS\b/)
-        .expect(405, done)
+        .expect(405)
     })
   })
 })
 
 describe('match(path)[method](fn).[method](fn)...', () => {
   describe('when the route matches', () => {
-    it('should execute the fn', (done) => {
+    it('should execute the fn', async () => {
       const app = new Koa()
       app.use(match('/a/b').get(function (ctx) {
         ctx.status = 204
@@ -204,20 +179,13 @@ describe('match(path)[method](fn).[method](fn)...', () => {
         ctx.status = 201
       }))
 
-      parallel()
-        .add(function (cb) {
-          request(app.listen())
-            .get('/a/b')
-            .expect(204, cb)
-        })
-        .add(function (cb) {
-          request(app.listen())
-            .post('/a/b')
-            .expect(201, cb)
-        }).done(done)
+      await Promise.all([
+        request(app.listen()).get('/a/b').expect(204),
+        request(app.listen()).post('/a/b').expect(201)
+      ])
     })
 
-    it('should support OPTIONS', (done) => {
+    it('should support OPTIONS', async () => {
       const app = new Koa()
       app.use(match('/:a(a)/:b(b)').get(function (ctx, next) {
         ctx.status = 204
@@ -227,13 +195,13 @@ describe('match(path)[method](fn).[method](fn)...', () => {
         ctx.status = 201
       }))
 
-      request(app.listen())
+      await request(app.listen())
         .options('/a/b')
         .expect('Allow', /\bHEAD\b/)
         .expect('Allow', /\bGET\b/)
         .expect('Allow', /\bPOST\b/)
         .expect('Allow', /\bOPTIONS\b/)
-        .expect(204, done)
+        .expect(204)
     })
   })
 })
