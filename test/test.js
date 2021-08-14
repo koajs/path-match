@@ -44,7 +44,7 @@ describe('match(path, fn)', () => {
 describe('match(path, fns...)', () => {
   it('should support multiple functions', async () => {
     let calls = 0
-    function call(ctx, next) {
+    function call (ctx, next) {
       return next().then(() => {
         ctx.body = String(++calls)
       })
@@ -58,7 +58,7 @@ describe('match(path, fns...)', () => {
 
   it('should support nested functions', async () => {
     let calls = 0
-    function call(ctx, next) {
+    function call (ctx, next) {
       return next().then(() => {
         ctx.body = String(++calls)
       })
@@ -72,7 +72,7 @@ describe('match(path, fns...)', () => {
 
   it('should support both multiple and nested functions', async () => {
     let calls = 0
-    function call(ctx, next) {
+    function call (ctx, next) {
       return next().then(() => {
         ctx.body = String(++calls)
       })
@@ -180,12 +180,8 @@ describe('match(path)[method](fn).[method](fn)...', () => {
       }))
 
       await Promise.all([
-        async () => {
-          await request(app.listen()).get('/a/b').expect(204)
-        },
-        async () => {
-          await request(app.listen()).post('/a/b').expect(201)
-        }
+        request(app.listen()).get('/a/b').expect(204),
+        request(app.listen()).post('/a/b').expect(201)
       ])
     })
 
