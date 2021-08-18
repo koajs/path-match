@@ -39,6 +39,10 @@ app.use(route('/:id(\\d+)')
 )
 ```
 
+## Maintainer
+
+- Lead: @jonathanong [@jongleberry](https://twitter.com/jongleberry)
+- Team: @koajs/routing
 
 ## API
 
