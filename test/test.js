@@ -9,7 +9,8 @@ const match = require('..')()
 let server
 
 afterEach((done) => {
-  server?.close?.(done)
+  if (server && server.close) server.close(done)
+  else setImmediate(done)
 })
 
 describe('match(path, fn)', () => {
