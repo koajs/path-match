@@ -7,7 +7,7 @@
   "repository": "koajs/path-match",
   "dependencies": {
     "lodash": "^4.17.21",
-    "path-to-regexp": "^7.1.0"
+    "path-to-regexp": "^8.1.0"
   },
   "devDependencies": {
     "codecov": "^3.8.3",
