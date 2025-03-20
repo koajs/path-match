@@ -27,7 +27,7 @@ describe('match(path, fn)', () => {
 
     it('should populate this.params', async () => {
       const app = new Koa()
-      app.use(match('/:a(a)/:b(b)', (ctx) => {
+      app.use(match('/:a/:b', (ctx) => {
         ctx.status = 204
         assert.equal('a', ctx.params.a)
         assert.equal('b', ctx.params.b)
@@ -112,7 +112,7 @@ describe('match(path)[method](fn)', () => {
 
     it('should populate this.params', async () => {
       const app = new Koa()
-      app.use(match('/:a(a)/:b(b)').get(function (ctx) {
+      app.use(match('/:a/:b').get(function (ctx) {
         ctx.status = 204
         assert.equal('a', ctx.params.a)
         assert.equal('b', ctx.params.b)
@@ -124,7 +124,7 @@ describe('match(path)[method](fn)', () => {
 
     it('should support OPTIONS', async () => {
       const app = new Koa()
-      app.use(match('/:a(a)/:b(b)').get(function (ctx, next) {
+      app.use(match('/:a/:b').get(function (ctx, next) {
         ctx.status = 204
         assert.equal('a', ctx.params.a)
         assert.equal('b', ctx.params.b)
@@ -142,7 +142,7 @@ describe('match(path)[method](fn)', () => {
     it('should support HEAD as GET', async () => {
       const app = new Koa()
       let called = false
-      app.use(match('/:a(a)/:b(b)').get(function (ctx, next) {
+      app.use(match('/:a/:b').get(function (ctx, next) {
         ctx.status = 204
         called = true
         assert.equal('a', ctx.params.a)
@@ -207,7 +207,7 @@ describe('match(path)[method](fn).[method](fn)...', () => {
 
     it('should support OPTIONS', async () => {
       const app = new Koa()
-      app.use(match('/:a(a)/:b(b)').get(function (ctx, next) {
+      app.use(match('/:a/:b').get(function (ctx, next) {
         ctx.status = 204
         assert.equal('a', ctx.params.a)
         assert.equal('b', ctx.params.b)
