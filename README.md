@@ -15,7 +15,7 @@ underneath, which is what Express uses as well.
 ```js
 const route = require('koa-path-match')({/* options passed to path-to-regexp */})
 
-app.use(route('/:id(\\d+)', (ctx, next) => {
+app.use(route('/:id', (ctx, next) => {
   const id = ctx.params.id
 
   // do stuff
@@ -28,7 +28,7 @@ app.use(route('/:id(\\d+)', (ctx, next) => {
 Or you can create middleware per method:
 
 ```js
-app.use(route('/:id(\\d+)')
+app.use(route('/:id')
   .get(async ctx => {
     ctx.body = await Things.getById(ctx.params.id)
   })
@@ -60,7 +60,7 @@ When you don't set `fns` in the `route()` function, a router instance is returne
 Define a middleware just for a specific method.
 
 ```js
-app.use(route('/:id(\\d+)').get(async ctx => {
+app.use(route('/:id').get(async ctx => {
   ctx.body = await Things.getById(ctx.params.id)
 }))
 ```
