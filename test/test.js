@@ -6,13 +6,6 @@ const Koa = require('koa')
 
 const match = require('..')()
 
-let server
-
-afterEach((done) => {
-  if (server && server.close) server.close(done)
-  else setImmediate(done)
-})
-
 describe('match(path, fn)', () => {
   describe('when the route matches', () => {
     it('should execute the fn', async () => {
@@ -21,8 +14,7 @@ describe('match(path, fn)', () => {
         ctx.status = 204
       }))
 
-      server = app.listen()
-      await request(server).get('/a/b').expect(204)
+      await request(app.callback()).get('/a/b').expect(204)
     })
 
     it('should populate this.params', async () => {
@@ -33,8 +25,7 @@ describe('match(path, fn)', () => {
         assert.equal('b', ctx.params.b)
       }))
 
-      server = app.listen()
-      await request(server).get('/a/b').expect(204)
+      await request(app.callback()).get('/a/b').expect(204)
     })
   })
 
@@ -45,8 +36,7 @@ describe('match(path, fn)', () => {
         ctx.status = 204
       }))
 
-      server = app.listen()
-      await request(server).get('/a').expect(404)
+      await request(app.callback()).get('/a').expect(404)
     })
   })
 })
@@ -63,8 +53,7 @@ describe('match(path, fns...)', () => {
     const app = new Koa()
     app.use(match('/a/b', call, call, call))
 
-    server = app.listen()
-    await request(server).get('/a/b').expect(200).expect('3')
+    await request(app.callback()).get('/a/b').expect(200).expect('3')
   })
 
   it('should support nested functions', async () => {
@@ -78,8 +67,7 @@ describe('match(path, fns...)', () => {
     const app = new Koa()
     app.use(match('/a/b', [call, [call, call]]))
 
-    server = app.listen()
-    await request(server).get('/a/b').expect(200).expect('3')
+    await request(app.callback()).get('/a/b').expect(200).expect('3')
   })
 
   it('should support both multiple and nested functions', async () => {
@@ -93,8 +81,7 @@ describe('match(path, fns...)', () => {
     const app = new Koa()
     app.use(match('/a/b', [call, [call, call]], call, [call, call]))
 
-    server = app.listen()
-    await request(server).get('/a/b').expect(200).expect('6')
+    await request(app.callback()).get('/a/b').expect(200).expect('6')
   })
 })
 
@@ -106,8 +93,7 @@ describe('match(path)[method](fn)', () => {
         ctx.status = 204
       }))
 
-      server = app.listen()
-      await request(server).get('/a/b').expect(204)
+      await request(app.callback()).get('/a/b').expect(204)
     })
 
     it('should populate this.params', async () => {
@@ -118,8 +104,7 @@ describe('match(path)[method](fn)', () => {
         assert.equal('b', ctx.params.b)
       }))
 
-      server = app.listen()
-      await request(server).get('/a/b').expect(204)
+      await request(app.callback()).get('/a/b').expect(204)
     })
 
     it('should support OPTIONS', async () => {
@@ -130,8 +115,7 @@ describe('match(path)[method](fn)', () => {
         assert.equal('b', ctx.params.b)
       }))
 
-      server = app.listen()
-      await request(server)
+      await request(app.callback())
         .options('/a/b')
         .expect('Allow', /\bHEAD\b/)
         .expect('Allow', /\bGET\b/)
@@ -149,8 +133,7 @@ describe('match(path)[method](fn)', () => {
         assert.equal('b', ctx.params.b)
       }))
 
-      server = app.listen()
-      await request(server).head('/a/b').expect(204)
+      await request(app.callback()).head('/a/b').expect(204)
 
       assert(called)
     })
@@ -163,10 +146,7 @@ describe('match(path)[method](fn)', () => {
         ctx.status = 204
       }))
 
-      server = app.listen()
-      await request(server)
-        .get('/a')
-        .expect(404)
+      await request(app.callback()).get('/a').expect(404)
     })
   })
 
@@ -177,8 +157,7 @@ describe('match(path)[method](fn)', () => {
         ctx.status = 204
       }))
 
-      server = app.listen()
-      await request(server)
+      await request(app.callback())
         .post('/a/b')
         .expect('Allow', /\bHEAD\b/)
         .expect('Allow', /\bGET\b/)
@@ -198,10 +177,9 @@ describe('match(path)[method](fn).[method](fn)...', () => {
         ctx.status = 201
       }))
 
-      server = app.listen()
       await Promise.all([
-        request(server).get('/a/b').expect(204),
-        request(server).post('/a/b').expect(201)
+        request(app.callback()).get('/a/b').expect(204),
+        request(app.callback()).post('/a/b').expect(201)
       ])
     })
 
@@ -215,8 +193,7 @@ describe('match(path)[method](fn).[method](fn)...', () => {
         ctx.status = 201
       }))
 
-      server = app.listen()
-      await request(server)
+      await request(app.callback())
         .options('/a/b')
         .expect('Allow', /\bHEAD\b/)
         .expect('Allow', /\bGET\b/)
