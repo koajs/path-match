@@ -96,6 +96,18 @@ describe('match(path, fns...)', () => {
     server = app.listen()
     await request(server).get('/a/b').expect(200).expect('6')
   })
+
+  it('should handle errors in middleware chain', async () => {
+    const app = new Koa()
+    app.use(match('/a/b',
+      (ctx, next) => next(),
+      (ctx, next) => { throw new Error('test error') },
+      (ctx, next) => next()
+    ))
+
+    server = app.listen()
+    await request(server).get('/a/b').expect(500)
+  })
 })
 
 describe('match(path)[method](fn)', () => {
@@ -139,6 +151,24 @@ describe('match(path)[method](fn)', () => {
         .expect(204)
     })
 
+    it('should support custom OPTIONS handler', async () => {
+      const app = new Koa()
+      app.use(match('/:a/:b')
+        .get(function (ctx) {
+          ctx.status = 204
+        })
+        .options(function (ctx) {
+          ctx.status = 200
+          ctx.body = 'custom options'
+        }))
+
+      server = app.listen()
+      await request(server)
+        .options('/a/b')
+        .expect(200)
+        .expect('custom options')
+    })
+
     it('should support HEAD as GET', async () => {
       const app = new Koa()
       let called = false
@@ -153,6 +183,14 @@ describe('match(path)[method](fn)', () => {
       await request(server).head('/a/b').expect(204)
 
       assert(called)
+    })
+
+    it('should throw error when method is already defined', () => {
+      const route = match('/a/b')
+      route.get(() => {})
+      assert.throws(() => {
+        route.get(() => {})
+      }, /Method GET is already defined for this route!/)
     })
   })
 
