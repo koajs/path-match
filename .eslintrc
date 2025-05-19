@@ -1,4 +1,9 @@
----
-extends: standard
-env: 
-  node: true
+{
+  "extends": "standard",
+  "env": {
+    "node": true
+  },
+  "globals": {
+    "URLPattern": "readonly"
+  }
+}
