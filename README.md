@@ -1,4 +1,3 @@
-
 # Koa Path Match
 
 [![NPM version][npm-image]][npm-url]
@@ -7,13 +6,16 @@
 [![License][license-image]][license-url]
 [![Downloads][downloads-image]][downloads-url]
 
-A simple routing wrapper around [path-match](https://github.com/expressjs/path-match).
+A simple routing wrapper around Node.js 24's native [URLPattern](https://developer.mozilla.org/en-US/docs/Web/API/URLPattern).
 Similar to [koa-route](https://github.com/koajs/route), except it optionally handles methods better.
-All of these routers use [path-to-regexp](https://github.com/component/path-to-regexp)
-underneath, which is what Express uses as well.
+This package uses the native URLPattern API which provides similar functionality to Express's routing.
+
+> NOTE: for older versions, [`path-to-regexp`](https://www.npmjs.com/package/path-to-regexp) was used. In v5, regexp capture groups were removed, but are added back in v6 with the migration to URLPattern.
+
+> NOTE: koa-path-match@6 only supports node v24+. Please use an older version of koa-path-match for older versions of node.
 
 ```js
-const route = require('koa-path-match')({/* options passed to path-to-regexp */})
+const route = require('koa-path-match')({/* options passed to URLPattern */})
 
 app.use(route('/:id', (ctx, next) => {
   const id = ctx.params.id
@@ -38,6 +40,10 @@ app.use(route('/:id')
   })
 )
 ```
+
+## Requirements
+
+- Node.js 24.0.0 or higher
 
 ## Maintainer
 
