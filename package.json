@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "codecov": "^3.8.3",
-    "jest": "^29.7.0",
+    "jest": "^30.5.2",
     "koa": "^2.13.1",
     "oxfmt": "^0.75.0",
     "oxlint": "^1.90.0",
