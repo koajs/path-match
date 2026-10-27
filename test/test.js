@@ -103,8 +103,7 @@ describe('URLPattern behavior', () => {
       ctx.body = ctx.params.id
     }))
 
-    server = app.listen()
-    await request(server).get('/users/caf%C3%A9').expect(200).expect('caf%C3%A9')
+    await request(app.callback()).get('/users/caf%C3%A9').expect(200).expect('caf%C3%A9')
   })
 
   it('should match case-sensitively by default', async () => {
@@ -113,8 +112,7 @@ describe('URLPattern behavior', () => {
       ctx.status = 204
     }))
 
-    server = app.listen()
-    await request(server).get('/users/1').expect(404)
+    await request(app.callback()).get('/users/1').expect(404)
   })
 
   it('should pass options to URLPattern', async () => {
@@ -124,8 +122,7 @@ describe('URLPattern behavior', () => {
       ctx.body = ctx.params.id
     }))
 
-    server = app.listen()
-    await request(server).get('/users/1').expect(200).expect('1')
+    await request(app.callback()).get('/users/1').expect(200).expect('1')
   })
 })
 
