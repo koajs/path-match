@@ -1,0 +1,132 @@
+name: Release
+
+# Publishes to npm with trusted publishing (OIDC), so no npm token is stored.
+# Release by bumping package.json on master, then pushing a matching tag:
+#   git tag v6.0.0 <merge-sha> && git push origin v6.0.0
+# Re-run a failed publish with workflow_dispatch and the same tag.
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing tag to publish (e.g. v6.0.0)
+        required: true
+        type: string
+
+permissions: {}
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: Publish to npm
+    runs-on: ubuntu-slim
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      id-token: write
+    env:
+      TAG: ${{ inputs.tag || github.ref_name }}
+      DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+    steps:
+      - name: Checkout tag
+        timeout-minutes: 5
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: refs/tags/${{ inputs.tag || github.ref_name }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Setup Node.js
+        timeout-minutes: 5
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24
+
+      - name: Check tag matches package.json and is on the default branch
+        timeout-minutes: 1
+        run: |
+          version="$(node -p "require('./package.json').version")"
+          if [ "$TAG" != "v$version" ]; then
+            echo "::error::Tag $TAG does not match package.json version $version" >&2
+            exit 1
+          fi
+          if ! git merge-base --is-ancestor HEAD "origin/$DEFAULT_BRANCH"; then
+            echo "::error::$TAG is not on $DEFAULT_BRANCH" >&2
+            exit 1
+          fi
+
+      - name: Install dependencies
+        timeout-minutes: 5
+        run: npm ci
+
+      - name: Lint
+        timeout-minutes: 5
+        run: npm run eslint
+
+      - name: Test
+        timeout-minutes: 10
+        run: npm test
+
+      - name: Publish
+        timeout-minutes: 5
+        run: |
+          name="$(node -p "require('./package.json').name")"
+          version="${TAG#v}"
+
+          # Safe retries: if npm already has this version, it must come from this commit.
+          published_head="$(npm view "$name@$version" gitHead 2>/dev/null || true)"
+          if [ -n "$published_head" ]; then
+            if [ "$published_head" != "$(git rev-parse HEAD)" ]; then
+              echo "::error::$name@$version is already published from $published_head, not $(git rev-parse HEAD)" >&2
+              exit 1
+            fi
+            echo "$name@$version is already published from this commit; skipping"
+            exit 0
+          fi
+
+          # Prereleases go to `next`. Never move `latest` back to an older version.
+          dist_tag=latest
+          case "$version" in
+            *-*) dist_tag=next ;;
+            *)
+              current="$(npm view "$name" dist-tags.latest 2>/dev/null || true)"
+              if [ -n "$current" ] && ! node -e '
+                const [a, b] = process.argv.slice(1).map((v) => v.split("-")[0].split(".").map(Number))
+                const cmp = a[0] - b[0] || a[1] - b[1] || a[2] - b[2]
+                process.exit(cmp > 0 ? 0 : 1)
+              ' "$version" "$current"; then
+                dist_tag="v${version%%.*}-latest"
+                echo "$version is not newer than latest ($current); publishing with tag $dist_tag"
+              fi
+              ;;
+          esac
+
+          npm publish --tag "$dist_tag"
+
+  github-release:
+    name: Create GitHub release
+    needs: publish
+    runs-on: ubuntu-slim
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    env:
+      TAG: ${{ inputs.tag || github.ref_name }}
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - name: Create release
+        timeout-minutes: 2
+        run: |
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "Release $TAG already exists"
+            exit 0
+          fi
+          prerelease=""
+          case "$TAG" in *-*) prerelease="--prerelease" ;; esac
+          gh release create "$TAG" --verify-tag --generate-notes $prerelease
