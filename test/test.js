@@ -92,8 +92,7 @@ describe('match(path, fns...)', () => {
       (ctx, next) => next()
     ))
 
-    server = app.listen()
-    await request(server).get('/a/b').expect(500)
+    await request(app.callback()).get('/a/b').expect(500)
   })
 })
 
@@ -146,8 +145,7 @@ describe('match(path)[method](fn)', () => {
           ctx.body = 'custom options'
         }))
 
-      server = app.listen()
-      await request(server)
+      await request(app.callback())
         .options('/a/b')
         .expect(200)
         .expect('custom options')
