@@ -24,7 +24,7 @@
   "devDependencies": {
     "codecov": "^3.8.3",
     "jest": "^30.5.2",
-    "koa": "^2.13.1",
+    "koa": "^3.2.1",
     "oxfmt": "^0.75.0",
     "oxlint": "^1.90.0",
     "supertest": "^7.0.0"
