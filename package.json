@@ -1,6 +1,6 @@
 {
   "name": "koa-path-match",
-  "version": "5.0.0",
+  "version": "6.0.0",
   "description": "koa route middleware",
   "keywords": [
     "koa",
@@ -8,7 +8,10 @@
   ],
   "license": "MIT",
   "author": "Jonathan Ong <me@jongleberry.com> (http://jongleberry.com)",
-  "repository": "koajs/path-match",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/koajs/path-match.git"
+  },
   "files": [
     "lib"
   ],
