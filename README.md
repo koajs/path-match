@@ -15,7 +15,7 @@ This package uses the native URLPattern API which provides similar functionality
 > NOTE: koa-path-match@6 only supports node v24+. Please use an older version of koa-path-match for older versions of node.
 
 ```js
-const route = require('koa-path-match')({/* options passed to URLPattern */})
+const route = require('koa-path-match')({/* options passed to URLPattern, e.g. { ignoreCase: true } */})
 
 app.use(route('/:id', (ctx, next) => {
   const id = ctx.params.id
@@ -44,6 +44,20 @@ app.use(route('/:id')
 ## Requirements
 
 - Node.js 24.0.0 or higher
+
+## Upgrading from v5
+
+v6 matches paths with the native `URLPattern` instead of `path-to-regexp@8`, so some behavior changes:
+
+| | v5 (`path-to-regexp`) | v6 (`URLPattern`) |
+| --- | --- | --- |
+| Param values | URL-decoded: `/users/caf%C3%A9` gives `id: 'café'` | Left as-is: `id: 'caf%C3%A9'`. Call `decodeURIComponent()` yourself if you need the decoded value |
+| Case | Case-insensitive | Case-sensitive. Pass `{ ignoreCase: true }` to restore v5 matching |
+| Options | Passed to `path-to-regexp` | Passed to `URLPattern` (`ignoreCase`) |
+| Wildcard | `/files/*rest` gives `rest: ['a', 'b']` | `/files/:rest+` gives `rest: 'a/b'`, or `/files/*` gives `0: 'a/b'` |
+| Optional segment | `/a{/:b}` | `/a{/:b}?` or `/a/:b?` |
+| Regexp params | Not supported | `/:id(\d+)` |
+| `route(path).match` | `path-to-regexp` match function | Removed. `route(path).pattern` is the `URLPattern` |
 
 ## Maintainer
 
