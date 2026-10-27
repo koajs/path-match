@@ -75,10 +75,38 @@ jobs:
       - name: Publish
         timeout-minutes: 5
         run: |
-          case "$TAG" in
-            *-*) npm publish --tag next ;;
-            *) npm publish ;;
+          name="$(node -p "require('./package.json').name")"
+          version="${TAG#v}"
+
+          # Safe retries: if npm already has this version, it must come from this commit.
+          published_head="$(npm view "$name@$version" gitHead 2>/dev/null || true)"
+          if [ -n "$published_head" ]; then
+            if [ "$published_head" != "$(git rev-parse HEAD)" ]; then
+              echo "::error::$name@$version is already published from $published_head, not $(git rev-parse HEAD)" >&2
+              exit 1
+            fi
+            echo "$name@$version is already published from this commit; skipping"
+            exit 0
+          fi
+
+          # Prereleases go to `next`. Never move `latest` back to an older version.
+          dist_tag=latest
+          case "$version" in
+            *-*) dist_tag=next ;;
+            *)
+              current="$(npm view "$name" dist-tags.latest 2>/dev/null || true)"
+              if [ -n "$current" ] && ! node -e '
+                const [a, b] = process.argv.slice(1).map((v) => v.split("-")[0].split(".").map(Number))
+                const cmp = a[0] - b[0] || a[1] - b[1] || a[2] - b[2]
+                process.exit(cmp > 0 ? 0 : 1)
+              ' "$version" "$current"; then
+                dist_tag="v${version%%.*}-latest"
+                echo "$version is not newer than latest ($current); publishing with tag $dist_tag"
+              fi
+              ;;
           esac
+
+          npm publish --tag "$dist_tag"
 
   github-release:
     name: Create GitHub release
