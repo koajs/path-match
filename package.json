@@ -1,41 +1,38 @@
 {
   "name": "koa-path-match",
-  "description": "koa route middleware",
   "version": "5.0.0",
-  "author": "Jonathan Ong <me@jongleberry.com> (http://jongleberry.com)",
+  "description": "koa route middleware",
+  "keywords": [
+    "koa",
+    "route"
+  ],
   "license": "MIT",
+  "author": "Jonathan Ong <me@jongleberry.com> (http://jongleberry.com)",
   "repository": "koajs/path-match",
-  "engines": {
-    "node": ">=24.0.0"
+  "files": [
+    "lib"
+  ],
+  "main": "lib",
+  "scripts": {
+    "lint": "oxlint && oxfmt --check",
+    "format": "oxfmt",
+    "test": "jest"
   },
   "dependencies": {
     "lodash": "^4.17.21"
   },
   "devDependencies": {
     "codecov": "^3.8.3",
-    "eslint": "^7.32.0",
-    "eslint-config-standard": "^16.0.3",
-    "eslint-plugin-import": "^2.24.0",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^5.1.0",
-    "eslint-plugin-standard": "^5.0.0",
     "jest": "^29.7.0",
     "koa": "^2.13.1",
+    "oxfmt": "^0.75.0",
+    "oxlint": "^1.90.0",
     "supertest": "^7.0.0"
   },
-  "scripts": {
-    "eslint": "eslint . --ignore-path .gitignore",
-    "test": "jest"
-  },
-  "keywords": [
-    "koa",
-    "route"
-  ],
-  "files": [
-    "lib"
-  ],
-  "main": "lib",
   "jest": {
     "testEnvironment": "node"
+  },
+  "engines": {
+    "node": ">=24.0.0"
   }
 }
